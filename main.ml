@@ -1,4 +1,4 @@
 open Kuru
 
 let () =
-  print_endline Exp.kuru 
+  Parser.program Lexer.token (Lexing.from_channel stdin)
