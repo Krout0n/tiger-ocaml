@@ -2,15 +2,15 @@
   (* This part is inserted into the head of the generated file. *)
 }
 
+let digits = ['0'-'9']
+
 rule token = parse
-| ['\x00'-'\xff'] { (* This means 'any byte' *) 
-    Printf.printf "lexer: %s\n" (Lexing.lexeme lexbuf);
-    Parser.CHAR (Lexing.lexeme lexbuf)
-  }
+| digits+ {
+  Token.Num ((int_of_string (Lexing.lexeme lexbuf)), Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf)
+}
 | eof {
-    Printf.printf "lexer: eof\n";
-    Parser.EOF
-  }
+  Token.EOF
+}
 
 {
   (* This part is inserted into the end of the generated file. *)
