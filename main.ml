@@ -1,2 +1,4 @@
+open Kuru
+
 let () =
-  print_endline "Hello, world!"
+  print_endline Exp.kuru 
