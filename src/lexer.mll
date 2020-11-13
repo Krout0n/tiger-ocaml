@@ -3,8 +3,10 @@
 }
 
 let digits = ['0'-'9']
+let spaces = [' ' '\n' '\t']
 
 rule token = parse
+  | spaces+ { token lexbuf }
   | digits+ {
     Token.Num ((int_of_string (Lexing.lexeme lexbuf)), Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf)
   }
