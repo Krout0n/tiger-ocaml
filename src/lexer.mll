@@ -1,7 +1,3 @@
-{
-  (* This part is inserted into the head of the generated file. *)
-}
-
 let digits = ['0'-'9']
 let spaces = [' ' '\n' '\t']
 
@@ -10,6 +6,7 @@ rule token = parse
   | digits+ {
     Token.Num ((int_of_string (Lexing.lexeme lexbuf)), Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf)
   }
+  | "/*" {comment 1 lexbuf}
   | "while" { Token.While (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | "for" { Token.For (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | "to" { Token.To (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
@@ -51,12 +48,8 @@ rule token = parse
   | "|" { Token.Or (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | ":=" { Token.ColonEq (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | eof { Token.EOF (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
-and block_comment = parse
-  | "*/" { () }
-  | "/*" { block_comment lexbuf; block_comment lexbuf }
-  | eof { () }
-  | _ { block_comment lexbuf }
-
-{
-  (* This part is inserted into the end of the generated file. *)
-}
+and comment level = parse
+  | "*/" { if level = 1 then token lexbuf else comment (level - 1) lexbuf }
+  | "/*" { comment (level + 1) lexbuf }
+  | eof { Token.EOF (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
+  | _ { comment level lexbuf }
