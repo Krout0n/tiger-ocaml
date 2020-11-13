@@ -175,9 +175,17 @@ let print_token = function
   | Token.ColonEq (start', end') -> (
     print_string "ColonEq";
     print_pos (start', end');
-  );
-  print_newline();;
+  );;
+
+let is_eof = function
+  | Token.EOF (_, _) -> true
+  | _ -> false;;
 
 let () = 
-  let tokens = Lexer.token (Lexing.from_channel stdin) in
-  print_token tokens;;
+  let still_loop = ref true in
+  while !still_loop do
+    let token = Lexer.token (Lexing.from_channel stdin) in
+    print_token token;
+    print_newline();
+    still_loop := not (is_eof token)
+  done;;
