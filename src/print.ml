@@ -15,6 +15,12 @@ let print_token = function
     print_string id;
     print_pos (start', end');
   )
+  | Token.String(literal, start', end') -> (
+    print_string "String: content: \"";
+    print_string literal;
+    print_string "\"";
+    print_pos (start', end');
+  ) 
   | Token.While (start', end') -> (
     print_string "While";
     print_pos (start', end');

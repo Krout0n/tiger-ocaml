@@ -4,6 +4,7 @@ type token =
   | EOF of pos * pos
   | Num of int * pos * pos
   | Ident of string * pos * pos
+  | String of string * pos * pos
   | While of pos * pos
   | For of pos * pos
   | To of pos * pos
