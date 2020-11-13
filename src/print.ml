@@ -10,6 +10,11 @@ let print_token = function
     print_int n;
     print_pos (start', end');
   )
+  | Token.Ident(id, start', end') -> (
+    print_string "Ident: content: ";
+    print_string id;
+    print_pos (start', end');
+  )
   | Token.While (start', end') -> (
     print_string "While";
     print_pos (start', end');

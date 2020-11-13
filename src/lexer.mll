@@ -1,5 +1,6 @@
 let digits = ['0'-'9']
 let spaces = [' ' '\n' '\t']
+let alphanumeric = ['a'-'z' 'A'-'Z' '0'-'9']
 
 rule token = parse
   | spaces+ { token lexbuf }
@@ -24,6 +25,7 @@ rule token = parse
   | "do" { Token.Do (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | "of" { Token.Of (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | "nil" { Token.Nil (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
+  | ['a'-'z' 'A'-'Z'](alphanumeric|"_")* as ident { Token.Ident(ident, Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | "," { Token.Comma (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | ":" { Token.Colon (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
   | ";" { Token.Semicolon (Lexing.lexeme_start lexbuf, Lexing.lexeme_end lexbuf) }
