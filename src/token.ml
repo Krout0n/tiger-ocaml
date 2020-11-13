@@ -20,3 +20,26 @@ type token =
   | Do of pos * pos
   | Of of pos * pos
   | Nil of pos * pos
+  | Comma of pos * pos
+  | Colon of pos * pos
+  | Semicolon of pos * pos
+  | LParen of pos * pos
+  | RParen of pos * pos
+  | LBrack of pos * pos
+  | RBrack of pos * pos
+  | LBrace of pos * pos
+  | RBrace of pos * pos
+  | Dot of pos * pos
+  | Plus of pos * pos
+  | Minus of pos * pos
+  | Asterisk of pos * pos
+  | Slash of pos * pos
+  | Equal of pos * pos
+  | LTGT of pos * pos
+  | LTE of pos * pos
+  | GTE of pos * pos
+  | LT of pos * pos
+  | GT of pos * pos
+  | And of pos * pos
+  | Or of pos * pos
+  | ColonEq of pos * pos
